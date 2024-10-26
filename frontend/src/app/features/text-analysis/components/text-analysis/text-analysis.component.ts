@@ -31,7 +31,7 @@ export class TextAnalysisComponent {
     if (this.isOnline) {
       this.textAnalyzerService.analyzeOnline(this.inputText, this.analysisType).subscribe({
         next: result => this.updateAnalysisResults(result),
-        error: error => this.toastr.error('Error analyzing text online')
+        error: error => this.toastr.error('Error analyzing text online'+error)
       });
       this.toastr.success('Text analyzed online!');
     } else {
@@ -42,6 +42,19 @@ export class TextAnalysisComponent {
   }
 
   private updateAnalysisResults(charCountMap: Map<string, number>) {
-    this.analysisResults = Array.from(charCountMap.entries()).map(([character, count]) => ({ character, count }));
+    charCountMap.forEach((count, character) => {
+      const existingEntry = this.analysisResults.find(entry => entry.character === character);
+      if (existingEntry) {
+        existingEntry.count += count;
+      } else {
+        this.analysisResults.push({ character, count });
+      }
+    });
+  }
+
+  clearResults() {
+    this.inputText = '';
+    this.analysisResults = [];
+    this.toastr.info('Results cleared!');
   }
 }

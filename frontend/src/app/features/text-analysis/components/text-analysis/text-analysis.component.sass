@@ -1,8 +1,13 @@
-.custom-control-input:checked ~ .custom-control-label::before
-  background-color: #28a745
+.table-responsive
+  max-height: 400px
+  overflow-y: auto
 
-.custom-control-label::before
-  transition: background-color 0.3s ease, border-color 0.3s ease
+tbody
+  display: block
+  max-height: 200px
+  overflow-y: auto
 
-.custom-control-input:focus ~ .custom-control-label::before
-  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25)
+thead, tbody tr
+  display: table
+  width: 100%
+  table-layout: fixed

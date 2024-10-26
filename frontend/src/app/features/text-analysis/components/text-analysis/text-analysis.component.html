@@ -29,7 +29,18 @@
         </div>
       </div>
 
-      <button (click)="analyzeText()" class="btn btn-success w-100">Analyze</button>
+      <div class="row">
+        <div class="col d-flex justify-content-start">
+          <button (click)="analyzeText()" class="btn btn-success d-flex align-items-center" [disabled]="!inputText.trim()">
+            <i class="bi bi-gear-wide"></i><span class="ms-2">Analyze</span>
+          </button>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <button (click)="clearResults()" class="btn btn-danger d-flex align-items-center" [disabled]="!inputText.trim()">
+            <i class="bi bi-trash"></i><span class="ms-2">Clear</span>
+          </button>
+        </div>
+      </div>
 
       <div *ngIf="analysisResults.length > 0" class="mt-4 table-responsive">
         <h5>Analysis Results:</h5>
@@ -40,7 +51,7 @@
             <th>Count</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody class="body">
           <tr *ngFor="let result of analysisResults">
             <td>{{ result.character }}</td>
             <td>{{ result.count }}</td>
