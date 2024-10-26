@@ -26,6 +26,7 @@ public class TextAnalyzerEndpoint {
         this.modelMapper = modelMapper;
     }
 
+    @CrossOrigin
     @PostMapping
     public ResponseEntity<Map<Character, Integer>> analyze(@RequestBody @Valid TextAnalysisRequestDto request) {
         logger.info("Received analysis request for type: {}", request.getType());
