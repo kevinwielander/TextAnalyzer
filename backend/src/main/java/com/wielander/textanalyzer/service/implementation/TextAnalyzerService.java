@@ -1,7 +1,10 @@
 package com.wielander.textanalyzer.service.implementation;
 
+import com.wielander.textanalyzer.exception.GlobalExceptionHandler;
 import com.wielander.textanalyzer.model.TextAnalysisRequest;
 import com.wielander.textanalyzer.service.ITextAnalyzerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -10,8 +13,11 @@ import java.util.Map;
 @Service
 public class TextAnalyzerService implements ITextAnalyzerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @Override
     public Map<Character, Integer> analyze(TextAnalysisRequest request) {
+        logger.trace("Analyzing text for type: {}", request.getType());
         if (request.getType().equals("vowels")) {
             String vowelString = "aeiou";
             return countCharacters(request.getText(), vowelString);
