@@ -13,9 +13,11 @@ public class TextAnalyzerService implements ITextAnalyzerService {
     @Override
     public Map<Character, Integer> analyze(TextAnalysisRequest request) {
         if (request.getType().equals("vowels")) {
-            return countCharacters(request.getText(), "aeiou");
+            String vowelString = "aeiou";
+            return countCharacters(request.getText(), vowelString);
         } else if (request.getType().equals("consonants")) {
-            return countCharacters(request.getText(), "bcdfghjklmnpqrstvwxyz");
+            String consonantString = "bcdfghjklmnpqrstvwxyz";
+            return countCharacters(request.getText(), consonantString);
         }
         return new HashMap<>();
     }

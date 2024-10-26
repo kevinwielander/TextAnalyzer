@@ -3,6 +3,7 @@ package com.wielander.textanalyzer.controller;
 import com.wielander.textanalyzer.dto.TextAnalysisRequestDto;
 import com.wielander.textanalyzer.model.TextAnalysisRequest;
 import com.wielander.textanalyzer.service.implementation.TextAnalyzerService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class TextAnalyzerEndpoint {
     }
 
     @PostMapping
-    public ResponseEntity<Map<Character, Integer>> analyze(@RequestBody TextAnalysisRequestDto request) {
+    public ResponseEntity<Map<Character, Integer>> analyze(@RequestBody @Valid TextAnalysisRequestDto request) {
         logger.info("Received analysis request for type: {}", request.getType());
         TextAnalysisRequest textAnalysisRequest = modelMapper.map(request, TextAnalysisRequest.class);
         logger.debug("Mapped DTO to model: {}", textAnalysisRequest);
