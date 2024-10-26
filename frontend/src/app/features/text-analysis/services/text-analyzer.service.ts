@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TextAnalyzerService {
 
-  private readonly apiUrl = 'http://localhost/api/v1/analyze';
+  private readonly apiUrl = 'http://localhost:8080/api/v1/analyze';
 
   constructor(private http: HttpClient) { }
 
   analyzeOnline(text: string, type: 'vowels' | 'consonants'): Observable<Map<string, number>> {
-    const requestBody = { text, type };
-    return this.http.post<Map<string, number>>(this.apiUrl, requestBody);
+    const requestBody = { type, text };
+    return this.http.post<{ [key: string]: number }>(this.apiUrl, requestBody).pipe(
+      map(response => this.transformToMap(response))
+    );
   }
 
   analyzeOffline(text: string, type: 'vowels' | 'consonants'): Map<string, number> {
@@ -28,5 +30,9 @@ export class TextAnalyzerService {
       }
     });
     return result;
+  }
+
+  private transformToMap(data: { [key: string]: number }): Map<string, number> {
+    return new Map<string, number>(Object.entries(data));
   }
 }

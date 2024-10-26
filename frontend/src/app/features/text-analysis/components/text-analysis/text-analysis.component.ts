@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import {TextAnalyzerService} from "../../services/text-analyzer.service";
 import {FormsModule} from "@angular/forms";
+import {CommonModule, NgFor} from "@angular/common";
 
 @Component({
   selector: 'app-text-analysis',
   standalone: true,
   imports: [
     FormsModule,
+    CommonModule,
+    NgFor,
   ],
   templateUrl: './text-analysis.component.html',
   styleUrl: './text-analysis.component.sass'
@@ -21,8 +24,9 @@ export class TextAnalysisComponent {
 
   analyzeText() {
     if (this.isOnline) {
-      this.textAnalyzerService.analyzeOnline(this.inputText, this.analysisType).subscribe(result => {
-        this.updateAnalysisResults(result);
+      this.textAnalyzerService.analyzeOnline(this.inputText, this.analysisType).subscribe({
+        next: result => this.updateAnalysisResults(result),
+        error: error => console.error('Error analyzing text online:', error)
       });
     } else {
       const result = this.textAnalyzerService.analyzeOffline(this.inputText, this.analysisType);
